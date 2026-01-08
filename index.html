@@ -299,7 +299,7 @@
 
 <div id="info-overlay" class="overlay">
     <div class="popup-box">
-        <div style="font-size: 40px; margin-bottom: 10px;"><img src="true.png" ></div>
+        <div style="font-size: 40px; margin-bottom: 10px;"><img src="true.png" width="80%" height="250px"></div>
         <h2 id="info-title" style="color: var(--primary);"></h2>
         <div id="info-desc" class="info-desc"></div>
         <button class="btn btn-primary" onclick="closeInfoAndProceed()">لنستمر في رحلتنا !</button>
@@ -308,7 +308,9 @@
 <div id="win-overlay" class="overlay">
     <div class="popup-box">
         <div style="font-size: 60px; margin-bottom: 10px;">🏆</div>
+        
         <h1 class="win-title">ألف مبروك يا <span id="winner-name" style="color: #006C35;"></span>!</h1>
+        
         <p class="win-message">أتممتِ جميع محطات المسار الوطني بنجاح باهر.</p>
         <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">بإشراف المعلمة: سلمى الشمري</p>
         <button class="btn btn-primary" onclick="resetGame()">رحلة جديدة</button>
@@ -410,30 +412,48 @@
         playSnd('snd-correct');
     }
 
-    function updateMap() {
-        // تحديث شريط التقدم
+function updateMap() {
+        // 1. التحقق أولاً: هل انتهت اللعبة؟
+        if (currentLvl > 5) {
+            playSnd('snd-win');
+            
+            // جلب الاسم من الذاكرة أو من حقل الإدخال
+            const savedName = localStorage.getItem('saudi_mobile_v7') || document.getElementById('username').value;
+            
+            // وضع الاسم داخل عنصر span في شاشة الفوز
+            document.getElementById('winner-name').innerText = savedName;
+            
+            // إظهار نافذة الفوز
+            document.getElementById('win-overlay').classList.add('active');
+            return; // توقف هنا ولا تكمل تحديث الأزرار
+        }
+
+        // 2. تحديث شريط التقدم (إذا لم تنته اللعبة)
         const pct = ((currentLvl-1) / 5) * 100;
         document.getElementById('progress-fill').style.width = pct + '%';
         document.getElementById('progress-text').innerText = (currentLvl-1) + '/5';
 
-        // تحديث الأزرار
+        // 3. تحديث الأزرار
         for(let i=1; i<=5; i++) {
             const btn = document.getElementById('btn-' + i);
-            btn.className = 'region-btn'; // reset styling
-            btn.innerHTML = ''; // clear icons inside
+            btn.className = 'region-btn'; // إعادة تعيين التنسيق
+            btn.innerHTML = ''; // مسح الأيقونات القديمة
 
-            // استعادة الاسم
+            // تحديد اسم المنطقة
             let rName = "";
-            if(i===1) rName="المنطقة الوسطى"; if(i===2) rName="المنطقة الغربية"; if(i===3) rName="المنطقة الشرقية";
-            if(i===4) rName="المنطقة الشمالية"; if(i===5) rName="المنطقة الجنوبية";
+            if(i===1) rName="المنطقة الوسطى"; 
+            if(i===2) rName="المنطقة الغربية"; 
+            if(i===3) rName="المنطقة الشرقية";
+            if(i===4) rName="المنطقة الشمالية"; 
+            if(i===5) rName="المنطقة الجنوبية";
             const label = `<span class="region-label">${rName}</span>`;
 
             if(i < currentLvl) {
-                // مكتمل
+                // مكتمل (سيأخذ علامة الصح من الـ CSS ::after)
                 btn.classList.add('completed');
                 btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + label;
             } else if(i === currentLvl) {
-                // نشط
+                // نشط (المرحلة الحالية)
                 btn.classList.add('active');
                 btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + label;
             } else {
