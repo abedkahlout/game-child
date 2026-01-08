@@ -4,79 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المسار الوطني 2030</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- الإعدادات العامة --- */
+        /* ============ المتغيرات والإعدادات الأساسية ============ */
+        :root {
+            --primary: #006C35;
+            --primary-light: #10b981;
+            --primary-dark: #004d26;
+            --accent: #fbbf24;
+            --accent-dark: #d97706;
+            --secondary: #1e3a8a;
+            --success: #10b981;
+            --danger: #dc2626;
+            --warning: #f59e0b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ============ إعادة تعيين عام ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f3f4f6;
-            margin: 0; padding: 0;
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            color: var(--text-dark);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ============ الحاوية الرئيسية ============ */
         .container {
-            width: 100%; height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        /* --- حاوية الكتاب --- */
-        .book-wrapper {
+        /* ============ شريط المعلومات العلوي ============ */
+        .top-bar {
+            background: var(--bg-white);
+            border-bottom: 2px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            z-index: 100;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            border: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .badge-exit {
+            background: #fee2e2;
+            color: var(--danger);
+            border-color: var(--danger);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .badge-exit:hover {
+            background: #fecaca;
+            transform: scale(1.05);
+        }
+
+        .badge-exit:active {
+            transform: scale(0.95);
+        }
+
+        /* ============ منطقة اللعبة الرئيسية ============ */
+        .game-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        /* ============ حاوية الخريطة ============ */
+        .map-container {
             position: relative;
-            width: 95%; max-width: 900px;
-            aspect-ratio: 1/1; 
-            display: flex; justify-content: center; align-items: center;
-            animation: mapEntrance 1s ease-out;
-            transition: transform 0.3s;
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1;
+            background: var(--bg-white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            border: 4px solid #dbeafe;
+            overflow: hidden;
+            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .map-image {
-            width: 100%; height: 100%;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            z-index: 1;
         }
 
-        /* --- الغيوم --- */
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50px;
-            filter: blur(5px);
-            z-index: 2;
-            pointer-events: none;
-            animation: floatCloud linear infinite;
-        }
-        .c1 { width: 80px; height: 30px; top: 15%; left: -20%; animation-duration: 20s; }
-        .c2 { width: 120px; height: 50px; top: 65%; left: -30%; animation-duration: 30s; animation-delay: 2s; }
-
-        @keyframes floatCloud {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100vw); }
-        }
-
-        /* --- الأزرار التفاعلية --- */
+        /* ============ الأزرار التفاعلية للمناطق ============ */
         .region-btn {
             position: absolute;
-            width: 7%; padding-bottom: 7%; height: 0;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-lg);
             z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            border: 2px solid white;
-            display: flex; justify-content: center; align-items: center;
+            user-select: none;
         }
 
-        .region-btn::after {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); font-size: 1.5rem;
+        @media (max-width: 600px) {
+            .region-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* حالة مقفول */
+        .region-btn.locked {
+            background: rgba(100, 116, 139, 0.8);
+            border-color: #94a3b8;
+            color: #cbd5e1;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .region-btn.locked:hover {
+            transform: none;
+        }
+
+        /* حالة نشط */
+        .region-btn.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: var(--accent);
+            color: white;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), var(--shadow-xl);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), var(--shadow-xl);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.8), var(--shadow-xl);
+            }
+        }
+
+        /* حالة مكتمل */
+        .region-btn.completed {
+            background: var(--bg-white);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .region-btn.completed:hover {
+            background: #f0fdf4;
+            transform: scale(1.1);
+        }
+
+        /* تأثير الهز */
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
         /* إضافة اسم المنطقة بشكل دائم أسفل الزر للجوال */
@@ -96,339 +245,771 @@
             pointer-events: none; /* حتى لا يعيق الضغط */
             opacity: 0; /* مخفي افتراضياً */
             transition: opacity 0.3s;
+            z-index: 11;
         }
 
         /* إظهار الاسم عند النشاط أو اللمس */
         .region-btn:active .region-label, 
         .region-btn:hover .region-label,
-        .region-btn.active-play .region-label {
+        .region-btn.active .region-label {
             opacity: 1;
         }
 
         /* للجوال: إظهار الأسماء للمناطق النشطة والمكتملة دائماً */
         @media (hover: none) {
-            .region-btn.active-play .region-label,
+            .region-btn.active .region-label,
             .region-btn.completed .region-label {
                 opacity: 1;
             }
         }
 
-        .btn-north { top: 25%; left: 30%; }
-        .btn-west { top: 42%; left: 34%; }
-        .btn-central { top: 43%; left: 54%; }
-        .btn-east { top: 52%; left: 74%; }
-        .btn-south { top: 65%; left: 45%; }
-
-        /* --- الحالات --- */
-        .locked { background-color: rgba(80, 80, 80, 0.8); border-color: #999; }
-        .locked::after { content: '🔒'; font-size: 1.2rem; filter: grayscale(1); }
-        
-        .shake-it { animation: shake 0.4s; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        /* ============ شريط التقدم ============ */
+        .progress-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 24px;
+            background: var(--bg-white);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--border);
         }
 
-        .active-play { background-color: rgba(0, 108, 53, 0.85); border-color: #FFD700; animation: pulseBtn 2s infinite; }
-        .active-play::after { content: '📍'; }
-
-        .completed { background-color: rgba(255, 255, 255, 0.9); border-color: #006C35; }
-        .completed::after { content: '✅'; }
-
-        @keyframes pulseBtn {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 108, 53, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 108, 53, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 108, 53, 0); }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
-        /* --- النوافذ المنبثقة --- */
-        .popup-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000;
-            justify-content: center; align-items: center;
-            backdrop-filter: blur(4px); padding: 20px; box-sizing: border-box;
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* ============ النوافذ المنبثقة ============ */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .overlay.active {
+            display: flex;
         }
 
         .popup-box {
-            background: white; padding: 20px; border-radius: 20px;
-            width: 100%; max-width: 400px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative;
-            animation: popIn 0.3s; max-height: 90vh; overflow-y: auto;
+            background: var(--bg-white);
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .btn-main {
-            background: linear-gradient(135deg, #006C35, #004d26); color: white; border: none; padding: 15px 30px;
-            border-radius: 50px; font-size: 1.1rem; cursor: pointer; width: 100%; margin-top: 15px; font-family: 'Cairo';
-            box-shadow: 0 5px 15px rgba(0,108,53,0.3);
-        }
-        .btn-main:active { transform: scale(0.98); }
-
-        .btn-opt {
-            background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; margin: 8px 0; border-radius: 12px;
-            font-weight: bold; width: 100%; cursor: pointer; text-align: right; font-family: 'Cairo'; font-size: 1rem;
-            color: #333; transition: background 0.2s;
-        }
-        .btn-opt:active { background: #e2e6ea; }
-
-        .top-bar {
-            position: absolute; top: 10px; left: 0; width: 100%; padding: 0 15px; display: flex; justify-content: space-between; box-sizing: border-box; z-index: 100;
-        }
-        .badge {
-            background: rgba(255,255,255,0.95); padding: 8px 15px; border-radius: 30px; font-weight: bold; color: #006C35;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        @media (max-width: 600px) {
-            .book-wrapper { width: 100%; animation: none; }
-            .map-image { border-radius: 0; box-shadow: none; }
-            .region-btn::after { font-size: 1.2rem; }
+        /* ============ نافذة تسجيل الدخول ============ */
+        .login-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .login-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 108, 53, 0.1);
+        }
+
+        /* ============ الأزرار ============ */
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-option {
+            background: var(--bg-light);
+            border: 2px solid var(--border);
+            color: var(--text-dark);
+            text-align: right;
+            margin: 8px 0;
+            padding: 12px 16px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-option:hover {
+            background: var(--border);
+            border-color: var(--primary);
+        }
+
+        .btn-option:active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .btn-option.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .btn-option.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* ============ رأس الاختبار ============ */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .quiz-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hearts {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+        }
+
+        .quiz-progress {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .quiz-feedback {
+            height: 28px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 12px;
+            text-align: center;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-feedback.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .quiz-feedback.error {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        /* ============ نافذة الفوز ============ */
+        .win-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            animation: bounce 0.6s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .win-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .win-message {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        /* ============ رسالة الحالة ============ */
+        .message-box {
+            margin-top: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            height: 24px;
+            color: var(--primary);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============ استجابة الجوال ============ */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 10px 12px;
+            }
+
+            .badge {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+
+            .game-area {
+                padding: 12px;
+            }
+
+            .map-container {
+                border-radius: 16px;
+                border-width: 3px;
+            }
+
+            .popup-box {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+
+            .quiz-question {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 1rem;
+            }
+        }
+
+        /* ============ تأثيرات إضافية ============ */
+        .glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.8));
+            }
+        }
+
+        /* ============ تمرير سلس ============ */
+        * {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        button {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     </style>
 </head>
 <body>
+
+<div class="container">
+    <div class="top-bar">
+        <div class="badge" id="name-display">👤 ...</div>
+        <div class="badge badge-exit" onclick="resetGame()">خروج</div>
+    </div>
+
+    <div class="game-area" id="game-ui" style="display: none;">
+        <div class="map-container">
+            <img src="map.jpeg" alt="خريطة السعودية" class="map-image">
+            
+            <div class="region-btn btn-north locked" id="btn-4" onclick="handleClick(3)" style="top: 25%; left: 30%;">
+                <span class="region-label">الشمالية</span>
+            </div>
+            <div class="region-btn btn-west locked" id="btn-2" onclick="handleClick(1)" style="top: 42%; left: 34%;">
+                <span class="region-label">الغربية</span>
+            </div>
+            <div class="region-btn btn-central locked" id="btn-1" onclick="handleClick(0)" style="top: 43%; left: 54%;">
+                <span class="region-label">الوسطى</span>
+            </div>
+            <div class="region-btn btn-east locked" id="btn-3" onclick="handleClick(2)" style="top: 52%; left: 74%;">
+                <span class="region-label">الشرقية</span>
+            </div>
+            <div class="region-btn btn-south locked" id="btn-5" onclick="handleClick(4)" style="top: 65%; left: 45%;">
+                <span class="region-label">الجنوبية</span>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span id="progress-text">5/5</span>
+                <span>التقدم</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 20%;"></div>
+            </div>
+        </div>
+
+        <div class="message-box" id="msg-box"></div>
+    </div>
+</div>
+
+<div id="login-overlay" class="overlay active">
+    <div class="popup-box">
+        <div style="text-align: center;">
+            <div class="login-icon">🇸🇦</div>
+            <h2 class="login-title">المسار الوطني 2030</h2>
+            <p class="login-subtitle">رحلة استكشافية عبر الجوال</p>
+            <input type="text" id="username" class="input-field" placeholder="اكتبي اسمكِ..." onkeypress="if(event.key==='Enter') startGame()">
+            <button class="btn btn-primary" onclick="startGame()">انطلاق 🚀</button>
+        </div>
+    </div>
+</div>
+
+<div id="quiz-overlay" class="overlay">
+    <div class="popup-box">
+        <div class="quiz-header">
+            <span class="hearts" id="hearts">❤❤❤</span>
+            <span class="quiz-title" id="quiz-title">المنطقة</span>
+        </div>
+        <div class="quiz-progress" id="q-progress">السؤال 1 من 3</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="quiz-progress-fill" style="width: 33%;"></div>
+        </div>
+        <h3 class="quiz-question" id="quiz-question">السؤال؟</h3>
+        <div id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>
+</div>
+
+<div id="win-overlay" class="overlay">
+    <div class="popup-box" style="text-align: center;">
+        <div class="win-icon">🏆</div>
+        <h1 class="win-title">ألف مبروك!</h1>
+        <p class="win-message">أتممتِ جميع محطات المسار الوطني بنجاح باهر.</p>
+        <button class="btn btn-primary" onclick="resetGame()">رحلة جديدة</button>
+    </div>
+</div>
 
 <audio id="snd-correct" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
 <audio id="snd-wrong" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
 <audio id="snd-win" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 <audio id="snd-click" src="https://www.soundjay.com/buttons/sounds/button-20.mp3"></audio>
 
-<div id="login-overlay" class="popup-overlay" style="display:flex;">
-    <div class="popup-box">
-        <div style="font-size: 50px; margin-bottom: 10px;">🇸🇦</div>
-        <h2 style="color:#006C35; margin:0;">المسار الوطني 2030</h2>
-        <p style="color:#666; font-size: 0.9rem;">رحلة استكشافية عبر الجوال</p>
-        <input type="text" id="username" placeholder="اكتبي اسمكِ..." style="width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; text-align: center; font-family:'Cairo'; font-size:1.1rem; outline:none; box-sizing:border-box;">
-        <button class="btn-main" onclick="startGame()">انطلاق 🚀</button>
-    </div>
-</div>
-
-<div class="container" id="game-ui" style="display:none;">
-    <div class="top-bar">
-        <div class="badge" id="name-display">👤 ...</div>
-        <div class="badge" style="color:#c62828; cursor:pointer;" onclick="resetGame()">خروج</div>
-    </div>
-
-    <div class="book-wrapper">
-        <div class="cloud c1"></div>
-        <div class="cloud c2"></div>
-        <img src="map2.png" alt="خريطة السعودية" class="map-image">
-
-        <div id="btn-4" class="region-btn btn-north locked" onclick="handleClick(3)">
-            <span class="region-label">المنطقة الشمـــالية </span>
-        </div>
-        <div id="btn-2" class="region-btn btn-west locked" onclick="handleClick(1)">
-            <span class="region-label">المنطقة الغــربية</span>
-        </div>
-        <div id="btn-1" class="region-btn btn-central locked" onclick="handleClick(0)">
-            <span class="region-label">المنطقة الوســطى</span>
-        </div>
-        <div id="btn-3" class="region-btn btn-east locked" onclick="handleClick(2)">
-            <span class="region-label">المنطقة الشــرقية</span>
-        </div>
-        <div id="btn-5" class="region-btn btn-south locked" onclick="handleClick(4)">
-            <span class="region-label">المنطقة الجــنوبية</span>
-        </div>
-    </div>
-    
-    <div id="msg-box" style="margin-top:20px; font-weight:bold; color:#555; height:20px; text-align:center;"></div>
-</div>
-
-<div id="quiz-overlay" class="popup-overlay">
-    <div class="popup-box">
-        <div style="display:flex; justify-content:space-between; margin-bottom:5px; align-items:center;">
-            <span id="quiz-title" style="color:#006C35; font-weight:bold; font-size:0.9rem;"></span>
-            <span style="background:#ffebee; padding:4px 8px; border-radius:8px; font-size:0.8rem; color:#c62828;">
-                <span id="hearts">❤❤❤</span>
-            </span>
-        </div>
-        
-        <span id="q-progress" style="font-size:0.8rem; color:#888; display:block; margin-bottom:10px;">السؤال 1 من 3</span>
-        <div style="width:100%; height:4px; background:#eee; border-radius:2px; margin-bottom:15px;">
-            <div id="progress-bar" style="width:33%; height:100%; background:#006C35; border-radius:2px; transition:width 0.3s;"></div>
-        </div>
-
-        <h3 id="quiz-question" style="margin:10px 0 20px 0; color:#333; font-weight: 600; line-height:1.5;">...</h3>
-        
-        <div id="quiz-options"></div>
-        <p id="quiz-feedback" style="height:25px; font-weight:bold; font-size:0.95rem; margin-top:10px;"></p>
-        <button style="background:none; border:none; color:#999; text-decoration:underline; font-family:'Cairo'; margin-top:10px;" onclick="closePopup('quiz-overlay')">انسحاب</button>
-    </div>
-</div>
-
-<div id="win-overlay" class="popup-overlay">
-    <div class="popup-box">
-        <div style="font-size: 70px;">🏆</div>
-        <h1 style="color:#fbc02d; font-size:1.8rem;">ألف مبروك!</h1>
-        <p>أتممتِ جميع محطات المسار الوطني بنجاح باهر.</p>
-        <button class="btn-main" onclick="resetGame()">رحلة جديدة</button>
-    </div>
-</div>
-
 <script>
-    /* --- البيانات --- */
+    // ============ البيانات ============
     const regions = [
-        { name: "المنطقة الوسطى", questions: [ { q: "عند إذابة مركب أيوني في الماء أصبح قادرًا على توصيل التيار، السبب؟", opts: ["أيونات حرة الحركة", "جزيئات متعادلة", "ضعف الروابط", "الحرارة"], ans: 0 }, { q: "إذا زادت قوة الروابط، ماذا يحدث لدرجة الانصهار؟", opts: ["لا تتغير", "تنخفض", "تتسامى", "تزداد"], ans: 3 }, { q: "المادة الأنسب لصناعة جسم يتحمل حرارة عالية؟", opts: ["ضعيفة الترابط", "غير مستقرة", "رابطة أيونية قوية", "روابط ضعيفة"], ans: 2 } ] },
-        { name: "المنطقة الغربية", questions: [ { q: "إذا كانت محصلة القوى صفراً، فالجسم؟", opts: ["يتسارع", "يتوقف", "ساكن أو سرعة ثابتة", "تتغير سرعته"], ans: 2 }, { q: "زيادة الكتلة مع ثبات القوة تؤدي إلى؟", opts: ["زيادة التسارع", "نقصان التسارع", "ثبات التسارع", "انعدام التسارع"], ans: 1 }, { q: "لتقليل التسارع مع ثبات القوة يجب؟", opts: ["تقليل الكتلة", "زيادة الكتلة", "زيادة القوة", "تغيير الاتجاه"], ans: 1 } ] },
-        { name: "المنطقة الشرقية", questions: [ { q: "زيادة حرارة التفاعل تؤدي إلى؟", opts: ["بطء التفاعل", "ثبات السرعة", "زيادة السرعة", "توقف التفاعل"], ans: 2 }, { q: "عدم وزن المعادلة يخالف قانون؟", opts: ["حفظ الكتلة", "النوع", "الطاقة", "التسارع"], ans: 0 }, { q: "لتسريع التفاعل دون تغيير المواد؟", opts: ["تبريد", "تقليل تركيز", "عامل حفاز", "تقليل سطح"], ans: 2 } ] },
-        { name: "المنطقة الشمالية", questions: [ { q: "زيادة المقاومة مع ثبات الجهد تؤدي لـ؟", opts: ["زيادة التيار", "نقصان التيار", "ثبات التيار", "انعدام التيار"], ans: 1 }, { q: "لزيادة شدة التيار يمكننا؟", opts: ["زيادة المقاومة", "تقليل الجهد", "زيادة الجهد", "إطالة السلك"], ans: 2 }, { q: "لحماية الدائرة من التيار الزائد؟", opts: ["إزالة المصباح", "زيادة الجهد", "مصهر (فيوز)", "سلك طويل"], ans: 2 } ] },
-        { name: "المنطقة الجنوبية", questions: [ { q: "لزيادة قوة المغناطيس الكهربائي؟", opts: ["تقليل التيار", "تقليل اللفات", "زيادة التيار", "سلك رفيع"], ans: 2 }, { q: "فائدة القلب الحديدي؟", opts: ["تقليل المجال", "لا يؤثر", "زيادة المجال", "عكس التيار"], ans: 2 }, { q: "لتقليل المجال المغناطيسي؟", opts: ["زيادة اللفات", "زيادة التيار", "تقليل التيار", "قلب حديدي"], ans: 2 } ] }
+        {
+            name: "المنطقة الوسطى",
+            btnId: "btn-1",
+            position: { top: "43%", left: "54%" },
+            questions: [
+                { q: "عند إذابة مركب أيوني في الماء أصبح قادرًا على توصيل التيار الكهربائي. ما السبب العلمي الأدق لذلك؟", opts: ["تكوّن أيونات حرة الحركة", "تحوّل المركب إلى جزيئات متعادلة", "ضعف الروابط التساهمية", "ارتفاع درجة حرارة المحلول"], ans: 0 },
+                { q: "إذا زادت قوة الروابط الكيميائية في مادة ما، فما الأثر المتوقع على درجة انصهارها؟", opts: ["لا تتغير درجة الانصهار", "تنخفض درجة الانصهار", "تتحول المادة مباشرة إلى غاز", "تزداد درجة الانصهار"], ans: 3 },
+                { q: "يريد عالم اختيار مادة مناسبة لصناعة جسم صلب يتحمل درجات حرارة عالية. أي اختيار هو الأنسب علميًا؟", opts: ["مادة جزيئية ضعيفة الترابط", "مادة غير مستقرة كيميائيًا", "مادة ذات روابط أيونية قوية", "مادة تحتوي روابط ضعيفة بين الجزيئات"], ans: 2 }
+            ]
+        },
+        {
+            name: "المنطقة الغربية",
+            btnId: "btn-2",
+            position: { top: "42%", left: "34%" },
+            questions: [
+                { q: "إذا كانت محصلة القوى المؤثرة على جسم تساوي صفرًا، فما حالة حركة الجسم؟", opts: ["يتحرك بتسارع", "يتوقف مباشرة", "ساكن أو يتحرك بسرعة ثابتة", "تتغير سرعته باستمرار"], ans: 2 },
+                { q: "عند زيادة كتلة جسم مع ثبات القوة المؤثرة عليه، ما الأثر المتوقع على تسارعه؟", opts: ["يزداد التسارع", "يقل التسارع", "يبقى التسارع ثابتًا", "ينعدم التسارع"], ans: 1 },
+                { q: "يريد سائق تقليل تسارع مركبته دون تغيير القوة المؤثرة عليها. أي إجراء هو الأنسب علميًا؟", opts: ["تقليل الكتلة", "زيادة الكتلة", "زيادة القوة", "تغيير الاتجاه"], ans: 1 }
+            ]
+        },
+        {
+            name: "المنطقة الشرقية",
+            btnId: "btn-3",
+            position: { top: "52%", left: "74%" },
+            questions: [
+                { q: "عند زيادة درجة حرارة التفاعل الكيميائي، ما الأثر المتوقع على سرعة التفاعل؟", opts: ["تقل سرعة التفاعل", "لا تتغير سرعة التفاعل", "تزداد سرعة التفاعل", "يتوقف التفاعل تمامًا"], ans: 2 },
+                { q: "إذا لم تُوزن معادلة كيميائية بشكل صحيح، فما المشكلة العلمية المترتبة على ذلك؟", opts: ["عدم حفظ الكتلة", "تغير نوع المواد", "زيادة طاقة التفاعل", "تسارع التفاعل"], ans: 0 },
+                { q: "يريد طالب تسريع تفاعل كيميائي دون تغيير نوع المواد. أي إجراء علمي هو الأنسب؟", opts: ["تقليل مساحة السطح", "خفض درجة الحرارة", "استخدام عامل حفاز", "تقليل تركيز المتفاعلات"], ans: 2 }
+            ]
+        },
+        {
+            name: "المنطقة الشمالية",
+            btnId: "btn-4",
+            position: { top: "25%", left: "30%" },
+            questions: [
+                { q: "إذا زادت المقاومة في دائرة كهربائية مع ثبات الجهد، ماذا يحدث لشدة التيار الكهربائي؟", opts: ["تزداد", "تقل", "تبقى ثابتة", "تنعدم مباشرة"], ans: 1 },
+                { q: "أي تغيير يؤدي إلى زيادة شدة التيار في الدائرة الكهربائية؟", opts: ["زيادة المقاومة", "تقليل الجهد", "زيادة الجهد", "زيادة طول السلك"], ans: 2 },
+                { q: "يريد طالب حماية دائرة كهربائية من زيادة التيار. أي إجراء هو الأنسب علميًا؟", opts: ["إزالة المصباح", "زيادة الجهد", "استخدام مصهر كهربائي", "زيادة طول السلك"], ans: 2 }
+            ]
+        },
+        {
+            name: "المنطقة الجنوبية",
+            btnId: "btn-5",
+            position: { top: "65%", left: "45%" },
+            questions: [
+                { q: "أي تغيير يؤدي إلى زيادة قوة المغناطيس الكهربائي؟", opts: ["تقليل شدة التيار", "تقليل عدد اللفات", "زيادة شدة التيار", "استخدام سلك رفيع جدًا"], ans: 2 },
+                { q: "لماذا تُستخدم بعض المواد كقلب في المغناطيس الكهربائي؟", opts: ["لتقليل المجال المغناطيسي", "لأنها لا تتأثر بالمغناطيس", "لزيادة شدة المجال المغناطيسي", "لتغيير اتجاه التيار"], ans: 2 },
+                { q: "يريد عالم تقليل تأثير المجال المغناطيسي في تجربة دقيقة. أي إجراء هو الأنسب علميًا؟", opts: ["زيادة عدد اللفات", "زيادة شدة التيار", "تقليل شدة التيار", "استخدام قلب حديدي"], ans: 2 }
+            ]
+        }
     ];
 
-    let currentLvl = 1; let activeRegionIdx = 0; let currentQIdx = 0; let tries = 3;
+    // ============ متغيرات اللعبة ============
+    let currentLvl = 1;
+    let activeRegionIdx = 0;
+    let currentQIdx = 0;
+    let tries = 3;
 
+    // ============ تهيئة الصوت ============
     function initAudio() {
         const audioIds = ['snd-correct', 'snd-wrong', 'snd-win', 'snd-click'];
         audioIds.forEach(id => {
             const el = document.getElementById(id);
-            if(el) {
-                el.muted = true; 
+            if (el) {
+                el.muted = true;
                 el.play().then(() => {
-                    el.pause(); el.currentTime = 0; el.muted = false;
+                    el.pause();
+                    el.currentTime = 0;
+                    el.muted = false;
                 }).catch(err => console.log("Audio pending:", err));
             }
         });
     }
 
+    // ============ تشغيل الأصوات ============
     function playSnd(type) {
-        const ids = {'win':'snd-win', 'correct':'snd-correct', 'wrong':'snd-wrong', 'click':'snd-click'};
+        const ids = { 'win': 'snd-win', 'correct': 'snd-correct', 'wrong': 'snd-wrong', 'click': 'snd-click' };
         const audio = document.getElementById(ids[type]);
-        if(audio) { 
-            audio.currentTime = 0; 
-            var playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {}).catch(error => console.log("Sound error: ", error));
-            }
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(error => console.log("Sound error: ", error));
         }
     }
 
-    window.onload = function() {
-        if(localStorage.getItem('saudi_mobile_v7')) {
-            document.getElementById('username').value = localStorage.getItem('saudi_mobile_v7');
-            currentLvl = parseInt(localStorage.getItem('saudi_lvl_v7') || 1);
-            document.getElementById('login-overlay').style.display = "none";
-            document.getElementById('game-ui').style.display = "flex";
+    // ============ تحميل من localStorage ============
+    window.onload = function () {
+        const saved = localStorage.getItem('saudi_mobile_v7');
+        const savedLevel = localStorage.getItem('saudi_lvl_v7');
+        if (saved) {
+            document.getElementById('username').value = saved;
+            currentLvl = parseInt(savedLevel || '1');
+            document.getElementById('login-overlay').classList.remove('active');
+            document.getElementById('game-ui').style.display = 'flex';
             updateMap();
         }
     };
 
-    function startGame(resume = false) {
+    // ============ بدء اللعبة ============
+    function startGame() {
         const user = document.getElementById('username').value;
-        if(!user) return alert("الرجاء كتابة الاسم");
-        
-        initAudio(); 
-
-        if(!resume) {
-            localStorage.setItem('saudi_mobile_v7', user);
-            localStorage.setItem('saudi_lvl_v7', 1);
-            currentLvl = 1;
-            playSnd('correct');
-        }
-        document.getElementById('name-display').innerText = "👤 " + user;
-        document.getElementById('login-overlay').style.display = "none";
-        document.getElementById('game-ui').style.display = "flex";
-        updateMap();
-    }
-
-    function updateMap() {
-        if(currentLvl > 5) {
-            playSnd('win');
-            document.getElementById('win-overlay').style.display = "flex";
+        if (!user) {
+            alert("الرجاء كتابة الاسم");
             return;
         }
-        for(let i=1; i<=5; i++) {
+
+        initAudio();
+        localStorage.setItem('saudi_mobile_v7', user);
+        localStorage.setItem('saudi_lvl_v7', '1');
+        currentLvl = 1;
+
+        document.getElementById('name-display').innerText = "👤 " + user;
+        document.getElementById('login-overlay').classList.remove('active');
+        document.getElementById('game-ui').style.display = 'flex';
+        updateMap();
+        playSnd('correct');
+    }
+
+    // ============ تحديث الخريطة ============
+    function updateMap() {
+        if (currentLvl > 5) {
+            playSnd('win');
+            document.getElementById('win-overlay').classList.add('active');
+            return;
+        }
+
+        // تحديث شريط التقدم
+        const progress = (currentLvl / 5) * 100;
+        document.getElementById('progress-fill').style.width = progress + '%';
+        document.getElementById('progress-text').innerText = currentLvl + '/5';
+
+        // تحديث حالة الأزرار
+        for (let i = 1; i <= 5; i++) {
             const btn = document.getElementById('btn-' + i);
-            btn.classList.remove('active-play', 'completed', 'locked');
-            if(i < currentLvl) btn.classList.add('completed');
-            else if (i === currentLvl) btn.classList.add('active-play');
-            else btn.classList.add('locked');
+            btn.classList.remove('active', 'completed', 'locked');
+            if (i < currentLvl) {
+                btn.classList.add('completed');
+                btn.innerHTML = '✅<span class="region-label">' + getRegionName(i) + '</span>';
+            } else if (i === currentLvl) {
+                btn.classList.add('active');
+                btn.innerHTML = '📍<span class="region-label">' + getRegionName(i) + '</span>';
+            } else {
+                btn.classList.add('locked');
+                btn.innerHTML = '🔒<span class="region-label">' + getRegionName(i) + '</span>';
+            }
         }
     }
 
+    function getRegionName(index) {
+        // ترتيب المناطق حسب الـ ID:
+        // btn-1: الوسطى (Index 0)
+        // btn-2: الغربية (Index 1)
+        // btn-3: الشرقية (Index 2)
+        // btn-4: الشمالية (Index 3)
+        // btn-5: الجنوبية (Index 4)
+        
+        // لكن الترتيب في الكود السابق كان:
+        // btn-4 (الشمالية) -> index 3
+        // btn-2 (الغربية) -> index 1
+        // btn-1 (الوسطى) -> index 0
+        // btn-3 (الشرقية) -> index 2
+        // btn-5 (الجنوبية) -> index 4
+        
+        // الدالة updateMap تستخدم i من 1 إلى 5 للبحث عن btn-i
+        // btn-1 هو regions[0] (الوسطى)
+        // btn-2 هو regions[1] (الغربية)
+        // btn-3 هو regions[2] (الشرقية)
+        // btn-4 هو regions[3] (الشمالية)
+        // btn-5 هو regions[4] (الجنوبية)
+        
+        // لكن انتبه: المصفوفة regions مرتبة كالتالي:
+        // 0: الوسطى
+        // 1: الغربية
+        // 2: الشرقية
+        // 3: الشمالية
+        // 4: الجنوبية
+        
+        // إذاً:
+        if (index === 1) return regions[0].name; // الوسطى
+        if (index === 2) return regions[1].name; // الغربية
+        if (index === 3) return regions[2].name; // الشرقية
+        if (index === 4) return regions[3].name; // الشمالية
+        if (index === 5) return regions[4].name; // الجنوبية
+        return "";
+    }
+
+    // ============ معالجة نقر المنطقة ============
     function handleClick(idx) {
         const lvl = idx + 1;
         const msg = document.getElementById('msg-box');
-        const btn = document.getElementById('btn-' + (idx+1));
-        
-        if(document.getElementById('snd-click').paused) {}
+        const btn = document.getElementById('btn-' + (idx + 1));
 
-        if(lvl < currentLvl) {
-            msg.innerText = "✅ تم إنجاز هذه المنطقة"; msg.style.color = "green";
+        if (lvl < currentLvl) {
+            msg.innerText = "✅ تم إنجاز هذه المنطقة";
+            msg.style.color = "#10b981";
         } else if (lvl > currentLvl) {
-            msg.innerText = "🔒 المنطقة مغلقة حالياً"; msg.style.color = "gray";
-            btn.classList.add('shake-it'); setTimeout(() => btn.classList.remove('shake-it'), 500);
-            playSnd('wrong'); 
+            msg.innerText = "🔒 المنطقة مقفولة حالياً";
+            msg.style.color = "#64748b";
+            btn.classList.add('shake');
+            setTimeout(() => btn.classList.remove('shake'), 400);
+            playSnd('wrong');
         } else {
             msg.innerText = "";
-            playSnd('click'); 
+            playSnd('click');
             startRegionQuiz(idx);
         }
     }
 
+    // ============ بدء اختبار المنطقة ============
     function startRegionQuiz(idx) {
-        activeRegionIdx = idx; currentQIdx = 0; tries = 3;
+        activeRegionIdx = idx;
+        currentQIdx = 0;
+        tries = 3;
         loadQuestion();
-        document.getElementById('quiz-overlay').style.display = "flex";
+        document.getElementById('quiz-overlay').classList.add('active');
     }
 
+    // ============ تحميل السؤال ============
     function loadQuestion() {
-        const rData = regions[activeRegionIdx]; const qData = rData.questions[currentQIdx];
+        const rData = regions[activeRegionIdx];
+        const qData = rData.questions[currentQIdx];
+
         document.getElementById('quiz-title').innerText = rData.name;
         document.getElementById('q-progress').innerText = `السؤال ${currentQIdx + 1} من ${rData.questions.length}`;
+
         const pct = ((currentQIdx + 1) / rData.questions.length) * 100;
-        document.getElementById('progress-bar').style.width = pct + "%";
+        document.getElementById('quiz-progress-fill').style.width = pct + '%';
+
         document.getElementById('quiz-question').innerText = qData.q;
-        document.getElementById('quiz-feedback').innerText = "";
-        document.getElementById('hearts').innerText = "❤".repeat(tries);
-        
-        const div = document.getElementById('quiz-options'); div.innerHTML = "";
+        document.getElementById('quiz-feedback').innerText = '';
+        document.getElementById('quiz-feedback').className = 'quiz-feedback';
+        document.getElementById('hearts').innerText = '❤'.repeat(tries);
+
+        const div = document.getElementById('quiz-options');
+        div.innerHTML = '';
         qData.opts.forEach((opt, i) => {
             const btn = document.createElement('button');
-            btn.className = 'btn-opt'; btn.innerText = opt;
-            btn.ontouchstart = () => {}; 
+            btn.className = 'btn btn-option';
+            btn.innerText = opt;
             btn.onclick = () => checkAnswer(i, btn);
             div.appendChild(btn);
         });
     }
 
+    // ============ التحقق من الإجابة ============
     function checkAnswer(ansIdx, btn) {
         const correct = regions[activeRegionIdx].questions[currentQIdx].ans;
-        document.querySelectorAll('.btn-opt').forEach(b => b.disabled = true);
+        document.querySelectorAll('.btn-option').forEach(b => b.disabled = true);
 
-        if(ansIdx === correct) {
+        if (ansIdx === correct) {
             playSnd('correct');
-            btn.style.background = "#d1fae5"; btn.style.borderColor = "green";
+            btn.classList.add('correct');
             document.getElementById('quiz-feedback').innerText = "إجابة صحيحة! أحسنتِ 🎉";
-            document.getElementById('quiz-feedback').style.color = "green";
+            document.getElementById('quiz-feedback').className = 'quiz-feedback success';
+
             setTimeout(() => {
-                if (currentQIdx < 2) { currentQIdx++; loadQuestion(); }
-                else {
-                    if(activeRegionIdx + 1 === currentLvl) { currentLvl++; localStorage.setItem('saudi_lvl_v7', currentLvl); }
-                    closePopup('quiz-overlay'); updateMap();
+                if (currentQIdx < 2) {
+                    currentQIdx++;
+                    loadQuestion();
+                } else {
+                    if (activeRegionIdx + 1 === currentLvl) {
+                        currentLvl++;
+                        localStorage.setItem('saudi_lvl_v7', currentLvl);
+                    }
+                    document.getElementById('quiz-overlay').classList.remove('active');
+                    updateMap();
                     alert(`ممتازة! أتممتِ ${regions[activeRegionIdx].name} بنجاح.`);
                 }
             }, 1000);
         } else {
-            playSnd('wrong'); tries--;
-            document.getElementById('hearts').innerText = "❤".repeat(tries);
-            btn.style.background = "#fee2e2"; btn.style.borderColor = "red";
+            playSnd('wrong');
+            tries--;
+            document.getElementById('hearts').innerText = '❤'.repeat(tries);
+            btn.classList.add('wrong');
             document.getElementById('quiz-feedback').innerText = "خطأ! حاولي مرة أخرى";
-            document.getElementById('quiz-feedback').style.color = "red";
+            document.getElementById('quiz-feedback').className = 'quiz-feedback error';
+
             setTimeout(() => {
-                if(tries > 0) {
-                    document.getElementById('quiz-feedback').innerText = "";
-                    document.querySelectorAll('.btn-opt').forEach(b => b.disabled = false);
+                if (tries > 0) {
+                    document.getElementById('quiz-feedback').innerText = '';
+                    document.getElementById('quiz-feedback').className = 'quiz-feedback';
+                    document.querySelectorAll('.btn-option').forEach(b => {
+                        b.disabled = false;
+                        b.classList.remove('correct', 'wrong');
+                    });
                 } else {
-                    alert("انتهت المحاولات!"); closePopup('quiz-overlay');
+                    alert("انتهت المحاولات!");
+                    document.getElementById('quiz-overlay').classList.remove('active');
                 }
             }, 1000);
         }
     }
 
-    function closePopup(id) { document.getElementById(id).style.display = "none"; }
-    function resetGame() { localStorage.clear(); location.reload(); }
+    // ============ إعادة تعيين اللعبة ============
+    function resetGame() {
+        localStorage.clear();
+        location.reload();
+    }
 </script>
 
 </body>
