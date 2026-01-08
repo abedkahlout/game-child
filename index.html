@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المسار الوطني 2030</title>
@@ -191,17 +192,14 @@
             border-color: var(--accent);
             color: white;
             animation: pulse 2s infinite;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), var(--shadow-xl);
         }
 
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), var(--shadow-xl);
             }
             50% {
                 transform: scale(1.1);
-                box-shadow: 0 0 30px rgba(16, 185, 129, 0.8), var(--shadow-xl);
             }
         }
 
@@ -471,6 +469,7 @@
 
         .hearts {
             font-size: 1.2rem;
+            color: red;
             letter-spacing: 4px;
         }
 
@@ -623,6 +622,48 @@
         button {
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        /* تنسيق الزر الأساسي */
+        .region-btn {
+            position: absolute;
+            width: 50px; height: 50px; /* حجم ثابت للأيقونة */
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; /* حجم الأيقونة */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        /* تحسينات للجوال */
+        @media (max-width: 600px) {
+            .region-btn { width: 40px; height: 40px; font-size: 1.1rem; }
+        }
+
+        /* 1. تنسيق المقفول */
+        .region-btn.locked {
+            background: #94a3b8; /* رمادي */
+            border-color: #cbd5e1;
+            color: #e2e8f0;
+        }
+        
+        /* 2. تنسيق النشط (الموقع الحالي) */
+        .region-btn.active {
+            background: #006c3400; /* أخضر الهوية */
+            color: #b30000;
+            font-size: 38px;
+            border-color: #fbbe2400; /* إطار ذهبي */
+            animation: pulse 2s infinite;
+        }
+
+        /* 3. تنسيق المكتمل */
+        .region-btn.completed {
+            background: #fff;
+            color: #006C35;
+            border-color: #006C35;
+        }
     </style>
 </head>
 <body>
@@ -635,9 +676,9 @@
 
     <div class="game-area" id="game-ui" style="display: none;">
         <div class="map-container">
-            <img src="map.jpeg" alt="خريطة السعودية" class="map-image">
+            <img src="map2.png" alt="خريطة السعودية" class="map-image">
             
-            <div class="region-btn btn-north locked" id="btn-4" onclick="handleClick(3)" style="top: 25%; left: 30%;">
+            <div class="region-btn btn-north locked" id="btn-4" onclick="handleClick(3)" style="top: 12%; left: 28%;">
                 <span class="region-label">الشمالية</span>
             </div>
             <div class="region-btn btn-west locked" id="btn-2" onclick="handleClick(1)" style="top: 42%; left: 34%;">
@@ -646,10 +687,10 @@
             <div class="region-btn btn-central locked" id="btn-1" onclick="handleClick(0)" style="top: 43%; left: 54%;">
                 <span class="region-label">الوسطى</span>
             </div>
-            <div class="region-btn btn-east locked" id="btn-3" onclick="handleClick(2)" style="top: 52%; left: 74%;">
+            <div class="region-btn btn-east locked" id="btn-3" onclick="handleClick(2)" style="top: 23%; left: 56%;">
                 <span class="region-label">الشرقية</span>
             </div>
-            <div class="region-btn btn-south locked" id="btn-5" onclick="handleClick(4)" style="top: 65%; left: 45%;">
+            <div class="region-btn btn-south locked" id="btn-5" onclick="handleClick(4)" style="top: 59%; left: 64%;">
                 <span class="region-label">الجنوبية</span>
             </div>
         </div>
@@ -844,19 +885,28 @@
         document.getElementById('progress-text').innerText = currentLvl + '/5';
 
         // تحديث حالة الأزرار
+       // تحديث حالة الأزرار
         for (let i = 1; i <= 5; i++) {
             const btn = document.getElementById('btn-' + i);
             btn.classList.remove('active', 'completed', 'locked');
+            
+            // اسم المنطقة
+            const regionNameSpan = '<span class="region-label">' + getRegionName(i) + '</span>';
+
             if (i < currentLvl) {
+                // ✅ حالة مكتمل (أيقونة صح دائرية)
                 btn.classList.add('completed');
-                btn.innerHTML = '✅<span class="region-label">' + getRegionName(i) + '</span>';
+                btn.innerHTML = '<i class="fas fa-check"></i>' + regionNameSpan;
             } else if (i === currentLvl) {
+                // 📍 حالة نشط (أيقونة دبوس خريطة)
                 btn.classList.add('active');
-                btn.innerHTML = '📍<span class="region-label">' + getRegionName(i) + '</span>';
+                btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + regionNameSpan;
             } else {
+                // 🔒 حالة مقفول (أيقونة قفل)
                 btn.classList.add('locked');
-                btn.innerHTML = '🔒<span class="region-label">' + getRegionName(i) + '</span>';
+                btn.innerHTML = '<i class="fas fa-lock"></i>' + regionNameSpan;
             }
+        
         }
     }
 
