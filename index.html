@@ -204,12 +204,41 @@
         }
 
         /* حالة مكتمل */
+      /* 3. مكتمل (التعديل الجديد) */
         .region-btn.completed {
             background: var(--bg-white);
-            border-color: var(--primary);
-            color: var(--primary);
+            border-color: #006C35; /* إطار أخضر */
+            color: rgb(153, 1, 1) !important; /* لون الدبوس أحمر */
+            opacity: 1; 
         }
 
+        /* إضافة أيقونة الصح الصغيرة فوق الزر المكتمل */
+        .region-btn.completed::after {
+          content: ''; /* مهم جداً: إزالة النص لنضع الصورة */
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;  /* حجم الدائرة الصغيرة */
+            height: 20px;
+            
+            /* إعدادات الصورة */
+            background-image: url("true.png"); 
+            background-size: cover; /* جعل الصورة تملأ الإطار */
+            background-position: center;
+            background-color: white; /* خلفية بيضاء تحت الصورة لضمان الوضوح */
+            
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+
+        .shake { animation: shake 0.4s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
         .region-btn.completed:hover {
             background: #f0fdf4;
             transform: scale(1.1);
@@ -651,10 +680,10 @@
         
         /* 2. تنسيق النشط (الموقع الحالي) */
         .region-btn.active {
-            background: #006c3400; /* أخضر الهوية */
+            background: #ffffff; /* أخضر الهوية */
             color: #b30000;
-            font-size: 38px;
-            border-color: #fbbe2400; /* إطار ذهبي */
+            font-size: 28px;
+            border-color: #fbbe2449; /* إطار ذهبي */
             animation: pulse 2s infinite;
         }
 
@@ -676,7 +705,7 @@
 
     <div class="game-area" id="game-ui" style="display: none;">
         <div class="map-container">
-            <img src="map2.png" alt="خريطة السعودية" class="map-image">
+            <img src="map3.png" alt="خريطة السعودية" class="map-image">
             
             <div class="region-btn btn-north locked" id="btn-4" onclick="handleClick(3)" style="top: 12%; left: 28%;">
                 <span class="region-label">الشمالية</span>
@@ -684,7 +713,7 @@
             <div class="region-btn btn-west locked" id="btn-2" onclick="handleClick(1)" style="top: 42%; left: 34%;">
                 <span class="region-label">الغربية</span>
             </div>
-            <div class="region-btn btn-central locked" id="btn-1" onclick="handleClick(0)" style="top: 43%; left: 54%;">
+            <div class="region-btn btn-central locked" id="btn-1" onclick="handleClick(0)" style="top: 38%; left: 50%;">
                 <span class="region-label">الوسطى</span>
             </div>
             <div class="region-btn btn-east locked" id="btn-3" onclick="handleClick(2)" style="top: 23%; left: 56%;">
@@ -896,7 +925,7 @@
             if (i < currentLvl) {
                 // ✅ حالة مكتمل (أيقونة صح دائرية)
                 btn.classList.add('completed');
-                btn.innerHTML = '<i class="fas fa-check"></i>' + regionNameSpan;
+                btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + regionNameSpan;
             } else if (i === currentLvl) {
                 // 📍 حالة نشط (أيقونة دبوس خريطة)
                 btn.classList.add('active');
