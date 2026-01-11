@@ -152,8 +152,8 @@
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         /* عناصر الواجهة */
-        .login-title { font-size: 1.6rem; font-weight: 900; color: var(--primary); margin: 10px 0; }
-        .login-subtitle { color: #666; margin-bottom: 5px; font-size: 0.95rem; }
+        .login-title { font-size: 1.5rem; font-weight: 900; color: var(--primary); margin: 10px 0; }
+        .login-subtitle {text-align: center; color: #666; margin-bottom: 5px; font-size: 0.95rem; }
         .teacher-name { color: var(--primary-dark); font-weight: bold; margin-bottom: 20px; font-size: 0.9rem; }
         
         .input-field {
@@ -226,13 +226,102 @@
 /* --- أنماط شاشات الهاتف (أصغر من أو تساوي 768 بكسل) --- */
 @media (max-width: 768px) {
 #btn-4 {
-  top: 18% !important;
+  top: 27% !important;
   left: 18% !important;
 }  #btn-2 { top: 42%; left: 34%; }
   #btn-1 { top: 38%; left: 50%; }
   #btn-3 { top: 23%; left: 56%; }
-  #btn-5 { top: 59%; left: 64%; }
+  #btn-5 { top: 59% !important; left: 64%; }
 }
+
+
+/* ============ تنسيق قصة البداية ============ */
+      /* ============ تنسيق القصة الجديد (مع الأيقونات) ============ */
+        .story-box {
+            background: #ffffff; /* خلفية بيضاء لنظافة التصميم */
+            border: 1px solid #e2e8f0;
+            border-radius: 16px; /* حواف أكثر استدارة */
+            padding: 25px;       /* تكبير المساحة الداخلية */
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* ظل خفيف جداً */
+            text-align: right;
+        }
+
+        .story-item {
+            display: flex;           /* ترتيب الأيقونة بجانب النص */
+            align-items: flex-start; /* محاذاة الأيقونة مع بداية السطر */
+            gap: 15px;               /* مسافة بين الأيقونة والنص */
+            margin-bottom: 18px;     /* مسافة بين كل نقطة والأخرى */
+        }
+        
+        .story-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .story-icon {
+            flex-shrink: 0;          /* منع الأيقونة من الانكماش */
+            width: 45px;             /* عرض الدائرة */
+            height: 45px;            /* ارتفاع الدائرة */
+            background: #f0fdf4;     /* خلفية خضراء فاتحة جداً */
+            color: var(--primary);   /* لون الأيقونة */
+            border-radius: 50%;      /* جعلها دائرية */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;       /* حجم الأيقونة */
+            border: 1px solid #dcfce7;
+        }
+
+        .story-text {
+            font-size: 1.1rem;       /* تكبير الخط */
+            line-height: 1.6;        /* تباعد الأسطر للقراءة المريحة */
+            color: #334155;
+            padding-top: 5px;        /* ضبط بسيط لتكون بمحاذاة وسط الأيقونة */
+        }
+
+        .story-highlight {
+            color: var(--primary);
+            font-weight: 800;
+        }
+        .story-box p {
+            margin-bottom: 8px;
+        }
+        .story-highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ============ تنسيق بطاقة الفوز ============ */
+        .winner-card {
+            background: linear-gradient(to bottom right, #ffffff, #f0fdf4);
+            border: 2px solid #dcfce7;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0, 108, 53, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* شريط زخرفي علوي */
+        .winner-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .rank-title {
+            background: var(--accent); /* لون ذهبي */
+            color: #78350f;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -250,11 +339,11 @@
         <div class="map-container">
             <img src="map3.png" alt="خريطة السعودية" class="map-image">
             
-            <div class="region-btn" id="btn-4" onclick="handleClick(3)" style="top: 12%; left: 28%;"> <span class="region-label">المنطقة الشمالية</span> </div>
-            <div class="region-btn" id="btn-2" onclick="handleClick(1)" style="top: 42%; left: 34%;"> <span class="region-label">المنطقة الغربية</span> </div>
+            <div class="region-btn" id="btn-4" onclick="handleClick(3)" style="top: 26%; left: 23%;"> <span class="region-label">المنطقة الشمالية</span> </div>
+            <div class="region-btn" id="btn-2" onclick="handleClick(2)" style="top: 42%; left: 27%;"> <span class="region-label">المنطقة الغربية</span> </div>
             <div class="region-btn" id="btn-1" onclick="handleClick(0)" style="top: 38%; left: 50%;"> <span class="region-label">المنطقة الوسطى</span> </div>
-            <div class="region-btn" id="btn-3" onclick="handleClick(2)" style="top: 23%; left: 56%;"> <span class="region-label">المنطقة الشرقية</span> </div>
-            <div class="region-btn" id="btn-5" onclick="handleClick(4)" style="top: 59%; left: 64%;"> <span class="region-label">المنطقة الجنوبية</span> </div>
+            <div class="region-btn" id="btn-3" onclick="handleClick(1)" style="top: 32%; left: 60%;"> <span class="region-label">المنطقة الشرقية</span> </div>
+            <div class="region-btn" id="btn-5" onclick="handleClick(4)" style="top: 63%; left: 51%;"> <span class="region-label">المنطقة الجنوبية</span> </div>
         </div>
 
         <div class="progress-container">
@@ -269,18 +358,41 @@
         <div class="message-box" id="msg-box"></div>
     </div>
 </div>
-
 <div id="login-overlay" class="overlay active">
     <div class="popup-box">
-        <div style="font-size: 50px;">🇸🇦</div>
         <h2 class="login-title">مهمة العالِمة | المسار الوطني 2030</h2>
-        <p class="login-subtitle">رحلة استكشافية عبر مناطق المملكة</p>
+        
+       <div class="story-box">
+            <div class="story-item">
+                <div class="story-icon"><i class="fas fa-flag-checkered"></i></div>
+                <div class="story-text">
+                    في إطار <span class="story-highlight">المسار الوطني 2030</span>، تم اختياركِ ضمن نخبة العالمات الصاعدات لرحلة استكشافية عبر المملكة.
+                </div>
+            </div>
+
+            <div class="story-item">
+                <div class="story-icon"><i class="fas fa-map-location-dot"></i></div>
+                <div class="story-text">
+                    كل منطقة هي <strong>محطة معرفية</strong>، عليكِ اجتياز تحدياتها العلمية بنجاح لفتح المنطقة التالية.
+                </div>
+            </div>
+
+            <div class="story-item">
+                <div class="story-icon"><i class="fas fa-medal"></i></div>
+                <div class="story-text" style="color: var(--primary-dark); font-weight: bold;">
+                    كل قرار علمي تتخذينه الآن يعكس مدى جاهزيتكِ لمواصلة المسار الوطني.
+                </div>
+            </div>
+        </div>
         <p class="teacher-name">المعلمة: سلمى الشمري</p>
-        <input type="text" id="username" class="input-field" placeholder="اكتبي اسمكِ..." onkeypress="if(event.key==='Enter') startGame()">
-        <button class="btn btn-primary" onclick="startGame()">انطلاق 🚀</button>
+        
+        <input type="text" id="username" class="input-field" placeholder="اكتبي اسمكِ الثلاثي" onkeypress="if(event.key==='Enter') startGame()">
+        
+        <button class="btn btn-primary" onclick="startGame()">
+             ابدئي المسار العلمي
+        </button>
     </div>
 </div>
-
 <div id="quiz-overlay" class="overlay">
     <div class="popup-box">
         <div class="quiz-header">
@@ -296,34 +408,51 @@
         <div class="quiz-feedback" id="quiz-feedback"></div>
     </div>
 </div>
-
 <div id="info-overlay" class="overlay">
     <div class="popup-box">
-        <div style="font-size: 40px; margin-bottom: 10px;"><img src="true.png" width="80%" height="250px"></div>
-        <h2 id="info-title" style="color: var(--primary);"></h2>
+        <div style="font-size: 80px; margin-bottom: 15px; color: var(--accent);"><img src="champion.png" height="250px" width="100%" alt=""></div>
+
+        <h3 id="congrats-title" style="color: var(--primary); font-weight: 800; margin-bottom: 10px;"></h3>
+
+        <h2 id="info-title" style="color: var(--primary-dark); margin-bottom: 15px;"></h2>
+
         <div id="info-desc" class="info-desc"></div>
         <button class="btn btn-primary" onclick="closeInfoAndProceed()">لنستمر في رحلتنا !</button>
     </div>
 </div>
+
 <div id="win-overlay" class="overlay">
     <div class="popup-box">
-        <div style="font-size: 60px; margin-bottom: 10px;">🏆</div>
+        <div style="font-size: 60px; margin-bottom: 10px; animation: pulse 1s infinite;"><img src="winner.avif" width="50%" height="150px" alt=""></div>
         
-        <h1 class="win-title">ألف مبروك يا <span id="winner-name" style="color: #006C35;"></span>!</h1>
+        <h2 class="win-title" style="color: var(--primary);">
+            ألف مبروك يا <span id="winner-name-title" style="color: var(--accent);"></span>!
+        </h2>
         
-        <p class="win-message">أتممتِ جميع محطات المسار الوطني بنجاح باهر.</p>
-        <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">بإشراف المعلمة: سلمى الشمري</p>
-        <button class="btn btn-primary" onclick="resetGame()">رحلة جديدة</button>
+        <p class="win-message" style="color: #555; margin-bottom: 10px;">
+            لقد أتممتِ المسار الوطني العلمي بنجاح باهر ! ✨
+        </p>
+
+        <div class="winner-card">
+            <h1 id="winner-full-name" style="color: var(--primary-dark); margin: 5px 0 10px 0;"></h1>
+            <div class="rank-title">عالمة المسار الوطني ✨</div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: #35320b; margin-bottom: 20px;">بإشراف المعلمة: سلمى الشمري</p>
+        
+        <button class="btn btn-primary" onclick="resetGame()">رحلة جديدة </button>
     </div>
 </div>
 
-<audio id="snd-correct" src="button-3.mp3"></audio>
+<audio id="snd-correct" src="clipping.mp3"></audio>
 <audio id="snd-wrong" src="button-10.mp3"></audio>
 <audio id="snd-click" src="button-20.mp3"></audio>
-<audio id="snd-click" src="button-20.mp3"></audio>
+<audio id="snd-win" src="winner.mp3"></audio>
 
 <script>
+
     /* ============ البيانات ============ */
+   /* ============ البيانات (تم تعديل الترتيب) ============ */
     const regions = [
         {
             name: "المنطقة الوسطى",
@@ -335,21 +464,21 @@
             ]
         },
         {
-            name: "المنطقة الغربية",
-            description: "مهوى أفئدة المسلمين، تحتضن الحرمين الشريفين وتجمع بين العمق الديني والتنوع الحضاري.",
-            questions: [
-                { q: "إذا كانت محصلة القوى المؤثرة على جسم تساوي صفرًا، فما حالة حركة الجسم؟", opts: ["يتحرك بتسارع", "يتوقف مباشرة", "ساكن أو يتحرك بسرعة ثابتة", "تتغير سرعته باستمرار"], ans: 2 },
-                { q: "عند زيادة كتلة جسم مع ثبات القوة المؤثرة عليه، ما الأثر المتوقع على تسارعه؟", opts: ["يزداد التسارع", "يقل التسارع", "يبقى التسارع ثابتًا", "ينعدم التسارع"], ans: 1 },
-                { q: "يريد سائق تقليل تسارع مركبته دون تغيير القوة المؤثرة عليها. أي إجراء هو الأنسب علميًا؟", opts: ["تقليل الكتلة", "زيادة الكتلة", "زيادة القوة", "تغيير الاتجاه"], ans: 1 }
-            ]
-        },
-        {
-            name: "المنطقة الشرقية",
+            name: "المنطقة الشرقية", // أصبحت رقم 2
             description: "عصب الاقتصاد الوطني، غنية بالثروات النفطية وتُعد مركزًا صناعيًا وتجاريًا مهمًا.",
             questions: [
                 { q: "عند زيادة درجة حرارة التفاعل الكيميائي، ما الأثر المتوقع على سرعة التفاعل؟", opts: ["تقل سرعة التفاعل", "لا تتغير سرعة التفاعل", "تزداد سرعة التفاعل", "يتوقف التفاعل تمامًا"], ans: 2 },
                 { q: "إذا لم تُوزن معادلة كيميائية بشكل صحيح، فما المشكلة العلمية المترتبة على ذلك؟", opts: ["عدم حفظ الكتلة", "تغير نوع المواد", "زيادة طاقة التفاعل", "تسارع التفاعل"], ans: 0 },
                 { q: "يريد طالب تسريع تفاعل كيميائي دون تغيير نوع المواد. أي إجراء علمي هو الأنسب؟", opts: ["تقليل مساحة السطح", "خفض درجة الحرارة", "استخدام عامل حفاز", "تقليل تركيز المتفاعلات"], ans: 2 }
+            ]
+        },
+        {
+            name: "المنطقة الغربية", // أصبحت رقم 3
+            description: "مهوى أفئدة المسلمين، تحتضن الحرمين الشريفين وتجمع بين العمق الديني والتنوع الحضاري.",
+            questions: [
+                { q: "إذا كانت محصلة القوى المؤثرة على جسم تساوي صفرًا، فما حالة حركة الجسم؟", opts: ["يتحرك بتسارع", "يتوقف مباشرة", "ساكن أو يتحرك بسرعة ثابتة", "تتغير سرعته باستمرار"], ans: 2 },
+                { q: "عند زيادة كتلة جسم مع ثبات القوة المؤثرة عليها، ما الأثر المتوقع على تسارعه؟", opts: ["يزداد التسارع", "يقل التسارع", "يبقى التسارع ثابتًا", "ينعدم التسارع"], ans: 1 },
+                { q: "يريد سائق تقليل تسارع مركبته دون تغيير القوة المؤثرة عليها. أي إجراء هو الأنسب علميًا؟", opts: ["تقليل الكتلة", "زيادة الكتلة", "زيادة القوة", "تغيير الاتجاه"], ans: 1 }
             ]
         },
         {
@@ -398,9 +527,25 @@
         }
     };
 
-    function startGame() {
-        const user = document.getElementById('username').value;
+function startGame() {
+        // نستخدم .trim() لإزالة المسافات الزائدة من البداية والنهاية
+        const user = document.getElementById('username').value.trim();
+
+        // 1. التحقق من أن الحقل ليس فارغاً
         if(!user) return alert("الرجاء كتابة الاسم");
+
+        // 2. التحقق من الطول (ألا يقل عن 8 حروف)
+        if(user.length < 8) {
+            return alert("⚠️ عذراً، يجب أن يتكون الاسم من 8 حروف على الأقل (يرجى كتابة الاسم الثلاثي).");
+        }
+
+        // 3. التحقق من وجود أرقام (يمنع أي رقم من 0 إلى 9)
+        if (/\d/.test(user)) {
+            return alert("⚠️ عذراً، لا يسمح بكتابة أرقام في الاسم.");
+        }
+
+        // --- إذا نجحت الشروط السابقة، يكمل الكود طبيعياً ---
+        
         initAudio();
         localStorage.setItem('saudi_user_v9', user);
         localStorage.setItem('saudi_lvl_v9', '1');
@@ -411,78 +556,56 @@
         updateMap();
         playSnd('snd-correct');
     }
-
-function updateMap() {
-        // 1. التحقق أولاً: هل انتهت اللعبة؟
+    
+    
+    function updateMap() {
+        // التحقق من الفوز
         if (currentLvl > 5) {
-            playSnd('snd-win');
-            
-            // جلب الاسم من الذاكرة أو من حقل الإدخال
-            const savedName = localStorage.getItem('saudi_mobile_v7') || document.getElementById('username').value;
-            
-            // وضع الاسم داخل عنصر span في شاشة الفوز
-            document.getElementById('winner-name').innerText = savedName;
-            
-            // إظهار نافذة الفوز
+            setTimeout(() => { playSnd('snd-win'); }, 300);
+            const savedName = localStorage.getItem('saudi_user_v9') || document.getElementById('username').value;
+            document.getElementById('winner-name-title').innerText = savedName.split(' ')[0];
+            document.getElementById('winner-full-name').innerText = savedName;
             document.getElementById('win-overlay').classList.add('active');
-            return; // توقف هنا ولا تكمل تحديث الأزرار
+            return;
         }
 
-        // 2. تحديث شريط التقدم (إذا لم تنته اللعبة)
+        // تحديث شريط التقدم
         const pct = ((currentLvl-1) / 5) * 100;
         document.getElementById('progress-fill').style.width = pct + '%';
         document.getElementById('progress-text').innerText = (currentLvl-1) + '/5';
 
-        // 3. تحديث الأزرار
-        for(let i=1; i<=5; i++) {
-            const btn = document.getElementById('btn-' + i);
-            btn.className = 'region-btn'; // إعادة تعيين التنسيق
-            btn.innerHTML = ''; // مسح الأيقونات القديمة
+        // خريطة تربط ترتيب اللعب بأزرار الخريطة
+        // الترتيب: 0:وسطى(btn1), 1:شرقية(btn3), 2:غربية(btn2), 3:شمالية(btn4), 4:جنوبية(btn5)
+        const levelToBtnId = ['btn-1', 'btn-3', 'btn-2', 'btn-4', 'btn-5'];
 
-            // تحديد اسم المنطقة
-            let rName = "";
-            if(i===1) rName="المنطقة الوسطى"; 
-            if(i===2) rName="المنطقة الغربية"; 
-            if(i===3) rName="المنطقة الشرقية";
-            if(i===4) rName="المنطقة الشمالية"; 
-            if(i===5) rName="المنطقة الجنوبية";
-            const label = `<span class="region-label">${rName}</span>`;
+        // تحديث الأزرار بناءً على الترتيب الجديد
+        regions.forEach((region, idx) => {
+            const btnId = levelToBtnId[idx];
+            const btn = document.getElementById(btnId);
+            const levelNum = idx + 1; // رقم المرحلة (1, 2, 3...)
+            
+            btn.className = 'region-btn';
+            btn.innerHTML = '';
+            
+            // إضافة العنوان
+            const label = `<span class="region-label">${region.name}</span>`;
 
-            if(i < currentLvl) {
-                // مكتمل (سيأخذ علامة الصح من الـ CSS ::after)
+            if(levelNum < currentLvl) {
+                // مرحلة منجزة
                 btn.classList.add('completed');
                 btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + label;
-            } else if(i === currentLvl) {
-                // نشط (المرحلة الحالية)
+            } else if(levelNum === currentLvl) {
+                // المرحلة الحالية
                 btn.classList.add('active');
                 btn.innerHTML = '<i class="fas fa-map-marker-alt"></i>' + label;
             } else {
-                // مقفل
+                // مرحلة مقفلة
                 btn.classList.add('locked');
                 btn.innerHTML = '<i class="fas fa-lock"></i>' + label;
             }
-        }
+        });
     }
-
     function handleClick(idx) {
-        // idx: 0=الوسطى, 1=الغربية, 2=الشرقية, 3=الشمالية, 4=الجنوبية
-        // Level logic: btn-1(idx0)=Lvl1, btn-2(idx1)=Lvl2... etc logic depends on mapping
-        // Mapping in HTML: 
-        // btn-1 (Central) -> onclick(0) -> should be Level 1? 
-        // Let's assume linear progression based on the regions array order:
-        // 0:Central, 1:West, 2:East, 3:North, 4:South.
-        // So btn-1 (Central) needs to be region 0.
-        
-        // Check HTML mapping:
-        // btn-1 (Central) -> onclick(0)
-        // btn-2 (West) -> onclick(1)
-        // btn-3 (East) -> onclick(2)
-        // btn-4 (North) -> onclick(3)
-        // btn-5 (South) -> onclick(4)
-        
-        // Logic: The user must play Region 0, then 1, then 2...
-        // Region Index = idx.
-        // Required Level to play = idx + 1.
         
         const reqLvl = idx + 1;
         const btn = document.getElementById('btn-' + (idx+1)); // approximate ID matching
@@ -580,15 +703,16 @@ function updateMap() {
             }, 1000);
         }
     }
-
-    function showInfoOverlay() {
-        const rData = regions[activeRegionIdx];
-        document.getElementById('info-title').innerText = rData.name;
-        document.getElementById('info-desc').innerText = rData.description;
-        document.getElementById('info-overlay').classList.add('active');
-        playSnd('snd-correct'); // Sound for info
-    }
-
+function showInfoOverlay() {
+    const rData = regions[activeRegionIdx];
+    // ملء عنوان التهنئة
+    document.getElementById('congrats-title').innerText = `رائع ! لقد اجتزتِ ${rData.name} بنجاح `;
+    // ملء اسم المنطقة الأصلي
+    document.getElementById('info-title').innerText = rData.name;
+    document.getElementById('info-desc').innerText = rData.description;
+    document.getElementById('info-overlay').classList.add('active');
+    playSnd('snd-correct'); // Sound for info
+}
     function closeInfoAndProceed() {
         document.getElementById('info-overlay').classList.remove('active');
         
@@ -613,6 +737,9 @@ function updateMap() {
         localStorage.clear();
         location.reload();
     }
+
+    
+
 </script>
 
 </body>
