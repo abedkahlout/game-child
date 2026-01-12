@@ -339,6 +339,18 @@ button.badge {
     outline: none; /* إزالة الإطار عند النقر */
     border-style: solid; /* تأكيد نمط الحدود */
 }
+/* الوضع الافتراضي (شاشات الكمبيوتر): إخفاء الاسم المختصر */
+.mobile-name { display: none; }
+.desktop-name { display: inline; }
+
+/* الوضع على الجوال (أصغر من 600 بكسل) */
+@media (max-width: 600px) {
+    .mobile-name { display: inline; } /* إظهار الاسم الأول فقط */
+    .desktop-name { display: none; }  /* إخفاء الاسم الكامل */
+    
+    /* تصغير حجم الخط قليلاً في البادج ليتناسب مع المساحة */
+    .badge { font-size: 0.75rem; padding: 6px 8px; }
+}
     </style>
 </head>
 <body>
@@ -540,6 +552,13 @@ button.badge {
             document.getElementById('login-overlay').classList.remove('active');
             document.getElementById('game-ui').style.display = 'flex';
             document.getElementById('name-display').innerText = "👤 " + savedUser;
+            // --- التعديل الجديد هنا ---
+        // نستخرج الاسم الأول فقط
+        const firstName = savedUser.split(' ')[0];
+        // نضع الاسمين داخل الـ HTML مع الكلاسات التي أنشأناها
+        document.getElementById('name-display').innerHTML = 
+            `👤 <span class="desktop-name">${savedUser}</span><span class="mobile-name">${firstName}</span>`;
+        // ---------------------------
             updateMap();
         }
     };
@@ -567,6 +586,11 @@ function startGame() {
         localStorage.setItem('saudi_user_v9', user);
         localStorage.setItem('saudi_lvl_v9', '1');
         currentLvl = 1;
+        // --- التعديل الجديد هنا ---
+    const firstName = user.split(' ')[0];
+    document.getElementById('name-display').innerHTML = 
+        `👤 <span class="desktop-name">${user}</span><span class="mobile-name">${firstName}</span>`;
+    // ---------------------------
         document.getElementById('name-display').innerText = "👤 " + user;
         document.getElementById('login-overlay').classList.remove('active');
         document.getElementById('game-ui').style.display = 'flex';
