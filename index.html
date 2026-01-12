@@ -6,7 +6,7 @@
     <title>مهمة العالِمة | المسار الوطني 2030</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <style>
         /* ============ المتغيرات والإعدادات الأساسية ============ */
         :root {
@@ -36,11 +36,22 @@
         .container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
 
         /* ============ الشريط العلوي ============ */
-        .top-bar {
-            background: var(--bg-white); border-bottom: 2px solid var(--border);
-            padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); z-index: 100;
-        }
+    .top-bar {
+    background: var(--bg-white);
+    border-bottom: 2px solid var(--border);
+    
+    /* التعديل هنا: نستخدم calc لجمع مسافة 10 بكسل العادية + مسافة الآيفون الآمنة */
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-bottom: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    z-index: 100;
+}
         .badge {
             background: #f0fdf4; padding: 6px 12px; border-radius: 20px; font-weight: 600;
             color: var(--primary); border: 1px solid var(--primary-light); font-size: 0.85rem;
@@ -322,6 +333,12 @@
             margin-top: 8px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
+        /* أضف هذا التنسيق في قسم الـ style */
+button.badge {
+    font-family: 'Cairo', sans-serif; /* لضمان نفس الخط */
+    outline: none; /* إزالة الإطار عند النقر */
+    border-style: solid; /* تأكيد نمط الحدود */
+}
     </style>
 </head>
 <body>
@@ -332,7 +349,7 @@
             <div class="badge" id="name-display">👤 ...</div>
             <div class="badge teacher-badge"><i class="fas fa-chalkboard-teacher"></i> سلمى الشمري</div>
         </div>
-        <div class="badge badge-exit" onclick="resetGame()"><i class="fas fa-sign-out-alt"></i> خروج</div>
+<button class="badge badge-exit" onclick="resetGame()"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
 
     <div class="game-area" id="game-ui" style="display: none;">
@@ -444,7 +461,7 @@
     </div>
 </div>
 
-<audio id="snd-correct" src="clipping.mp3"></audio>
+<audio id="snd-correct" src="correct-choice-43861.mp3"></audio>
 <audio id="snd-wrong" src="button-10.mp3"></audio>
 <audio id="snd-click" src="button-20.mp3"></audio>
 <audio id="snd-win" src="winner.mp3"></audio>
@@ -738,7 +755,11 @@ function showInfoOverlay() {
         location.reload();
     }
 
-    
+    function resetGame() {
+    localStorage.clear();
+    // استخدام هذا الكود يضمن إعادة تحميل الصفحة وتفريغ الكاش
+    window.location.href = window.location.href;
+}
 
 </script>
 
