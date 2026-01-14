@@ -41,7 +41,7 @@
     border-bottom: 2px solid var(--border);
     
     /* التعديل هنا: نستخدم calc لجمع مسافة 10 بكسل العادية + مسافة الآيفون الآمنة */
-    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-top: 30px;
     padding-bottom: 10px;
     padding-right: 15px;
     padding-left: 15px;
@@ -351,6 +351,28 @@ button.badge {
     /* تصغير حجم الخط قليلاً في البادج ليتناسب مع المساحة */
     .badge { font-size: 0.75rem; padding: 6px 8px; }
 }
+/* تنسيق حاوية الصورة */
+.region-image-container {
+    width: 100%;
+    height: 180px; /* ارتفاع ثابت للصورة */
+    border-radius: 15px; /* زوايا دائرية */
+    overflow: hidden;
+    margin: 10px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 3px solid #fff;
+}
+
+/* تنسيق الصورة نفسها */
+.region-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* لضمان ملء الصورة للإطار دون تمطيط */
+    transition: transform 0.3s;
+}
+
+.region-image-container:hover img {
+    transform: scale(1.05); /* تأثير تكبير بسيط عند تمرير الماوس */
+}
     </style>
 </head>
 <body>
@@ -359,7 +381,7 @@ button.badge {
     <div class="top-bar">
         <div style="display: flex; gap: 8px; align-items: center;">
             <div class="badge" id="name-display">👤 ...</div>
-            <div class="badge teacher-badge"><i class="fas fa-chalkboard-teacher"></i> سلمى الشمري</div>
+            <div class="badge teacher-badge"><i class="fas fa-chalkboard-teacher"></i> سلمى فريح الشمري</div>
         </div>
 <button class="badge badge-exit" onclick="resetGame()"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
@@ -413,7 +435,7 @@ button.badge {
                 </div>
             </div>
         </div>
-        <p class="teacher-name">المعلمة: سلمى الشمري</p>
+        <p class="teacher-name">المعلمة: سلمى فريح الشمري</p>
         
         <input type="text" id="username" class="input-field" placeholder="اكتبي اسمكِ الثلاثي" onkeypress="if(event.key==='Enter') startGame()">
         
@@ -439,11 +461,16 @@ button.badge {
 </div>
 <div id="info-overlay" class="overlay">
     <div class="popup-box">
-        <div style="font-size: 80px; margin-bottom: 15px; color: var(--accent);"><img src="champion.png" height="250px" width="100%" alt=""></div>
+        <div style="font-size: 80px; margin-bottom: 5px; color: var(--accent);">
+            <img src="champion.png" height="150px" alt="">
+        </div>
 
-        <h3 id="congrats-title" style="color: var(--primary); font-weight: 800; margin-bottom: 10px;"></h3>
+        <h3 id="congrats-title" style="color: var(--primary); font-weight: 800; margin-bottom: 5px;"></h3>
+        <h2 id="info-title" style="color: var(--primary-dark); margin-bottom: 10px;"></h2>
 
-        <h2 id="info-title" style="color: var(--primary-dark); margin-bottom: 15px;"></h2>
+        <div class="region-image-container">
+            <img id="region-img-display" src="" alt="صورة المنطقة">
+        </div>
 
         <div id="info-desc" class="info-desc"></div>
         <button class="btn btn-primary" onclick="closeInfoAndProceed()">لنستمر في رحلتنا !</button>
@@ -452,7 +479,7 @@ button.badge {
 
 <div id="win-overlay" class="overlay">
     <div class="popup-box">
-        <div style="font-size: 60px; margin-bottom: 10px; animation: pulse 1s infinite;"><img src="winner.avif" width="50%" height="150px" alt=""></div>
+        <div style="font-size: 60px; margin-bottom: 10px; animation: pulse 1s infinite;"><img src="winner.jpg" width="70%" height="200px" alt=""></div>
         
         <h2 class="win-title" style="color: var(--primary);">
             ألف مبروك يا <span id="winner-name-title" style="color: var(--accent);"></span>!
@@ -467,7 +494,7 @@ button.badge {
             <div class="rank-title">عالمة المسار الوطني ✨</div>
         </div>
 
-        <p style="font-size: 0.85rem; color: #35320b; margin-bottom: 20px;">بإشراف المعلمة: سلمى الشمري</p>
+        <p style="font-size: 0.85rem; color: #35320b; margin-bottom: 20px;">بإشراف المعلمة: سلمى فريح الشمري</p>
         
         <button class="btn btn-primary" onclick="resetGame()">رحلة جديدة </button>
     </div>
@@ -485,6 +512,7 @@ button.badge {
     const regions = [
         {
             name: "المنطقة الوسطى",
+            img: "wosta.jpeg",  // <-- أضف اسم الصورة هنا (تأكد أن الصورة بجانب ملف الـ html)
             description: "قلب المملكة النابض، تنطلق منها القيادة وتزدهر فيها التنمية والاقتصاد والتخطيط الوطني.",
             questions: [
                 { q: "عند إذابة مركب أيوني في الماء أصبح قادرًا على توصيل التيار الكهربائي. ما السبب العلمي الأدق لذلك؟", opts: ["تكوّن أيونات حرة الحركة", "تحوّل المركب إلى جزيئات متعادلة", "ضعف الروابط التساهمية", "ارتفاع درجة حرارة المحلول"], ans: 0 },
@@ -494,15 +522,19 @@ button.badge {
         },
         {
             name: "المنطقة الشرقية", // أصبحت رقم 2
+                        img: "sharq.jpeg",  // <-- أضف اسم الصورة هنا (تأكد أن الصورة بجانب ملف الـ html)
+
             description: "عصب الاقتصاد الوطني، غنية بالثروات النفطية وتُعد مركزًا صناعيًا وتجاريًا مهمًا.",
             questions: [
                 { q: "عند زيادة درجة حرارة التفاعل الكيميائي، ما الأثر المتوقع على سرعة التفاعل؟", opts: ["تقل سرعة التفاعل", "لا تتغير سرعة التفاعل", "تزداد سرعة التفاعل", "يتوقف التفاعل تمامًا"], ans: 2 },
                 { q: "إذا لم تُوزن معادلة كيميائية بشكل صحيح، فما المشكلة العلمية المترتبة على ذلك؟", opts: ["عدم حفظ الكتلة", "تغير نوع المواد", "زيادة طاقة التفاعل", "تسارع التفاعل"], ans: 0 },
-                { q: "يريد طالب تسريع تفاعل كيميائي دون تغيير نوع المواد. أي إجراء علمي هو الأنسب؟", opts: ["تقليل مساحة السطح", "خفض درجة الحرارة", "استخدام عامل حفاز", "تقليل تركيز المتفاعلات"], ans: 2 }
+                { q: "يريد طالب تسريع تفاعل كيميائي دون تغيير نوع المواد. أي إجراء علمي هو الأنسب؟", opts: ["تقليل مساحة السطح", "خفض درجة الحرارة", "استخدام عامل محفز", "تقليل تركيز المتفاعلات"], ans: 2 }
             ]
         },
         {
             name: "المنطقة الغربية", // أصبحت رقم 3
+                        img: "gharb.jpeg",  // <-- أضف اسم الصورة هنا (تأكد أن الصورة بجانب ملف الـ html)
+
             description: "مهوى أفئدة المسلمين، تحتضن الحرمين الشريفين وتجمع بين العمق الديني والتنوع الحضاري.",
             questions: [
                 { q: "إذا كانت محصلة القوى المؤثرة على جسم تساوي صفرًا، فما حالة حركة الجسم؟", opts: ["يتحرك بتسارع", "يتوقف مباشرة", "ساكن أو يتحرك بسرعة ثابتة", "تتغير سرعته باستمرار"], ans: 2 },
@@ -512,6 +544,7 @@ button.badge {
         },
         {
             name: "المنطقة الشمالية",
+            img: "shammal.jpeg",  // <-- أضف اسم الصورة هنا (تأكد أن الصورة بجانب ملف الـ html)
             description: "بوابة تاريخية وحضارية، تمتاز بموقعها الاستراتيجي وعمقها التراثي وتنوع مواردها الطبيعية.",
             questions: [
                 { q: "إذا زادت المقاومة في دائرة كهربائية مع ثبات الجهد، ماذا يحدث لشدة التيار الكهربائي؟", opts: ["تزداد", "تقل", "تبقى ثابتة", "تنعدم مباشرة"], ans: 1 },
@@ -521,6 +554,8 @@ button.badge {
         },
         {
             name: "المنطقة الجنوبية",
+                        img: "janoob.jpeg",  // <-- أضف اسم الصورة هنا (تأكد أن الصورة بجانب ملف الـ html)
+
             description: "جمال الطبيعة وروح الأصالة، تتميز بتضاريسها الخلابة وتراثها الثقافي العريق.",
             questions: [
                 { q: "أي تغيير يؤدي إلى زيادة قوة المغناطيس الكهربائي؟", opts: ["تقليل شدة التيار", "تقليل عدد اللفات", "زيادة شدة التيار", "استخدام سلك رفيع جدًا"], ans: 2 },
@@ -746,13 +781,23 @@ function startGame() {
     }
 function showInfoOverlay() {
     const rData = regions[activeRegionIdx];
-    // ملء عنوان التهنئة
+    
+    // النصوص
     document.getElementById('congrats-title').innerText = `رائع ! لقد اجتزتِ ${rData.name} بنجاح `;
-    // ملء اسم المنطقة الأصلي
     document.getElementById('info-title').innerText = rData.name;
     document.getElementById('info-desc').innerText = rData.description;
+    
+    // !!! الكود الجديد للصورة !!!
+    const imgElement = document.getElementById('region-img-display');
+    if (rData.img) {
+        imgElement.src = rData.img;
+        imgElement.parentElement.style.display = 'block'; // إظهار الصورة إذا كانت موجودة
+    } else {
+        imgElement.parentElement.style.display = 'none'; // إخفاء الإطار إذا لم تضع صورة
+    }
+
     document.getElementById('info-overlay').classList.add('active');
-    playSnd('snd-correct'); // Sound for info
+    playSnd('snd-correct'); 
 }
     function closeInfoAndProceed() {
         document.getElementById('info-overlay').classList.remove('active');
@@ -783,7 +828,10 @@ function showInfoOverlay() {
     localStorage.clear();
     // استخدام هذا الكود يضمن إعادة تحميل الصفحة وتفريغ الكاش
     window.location.href = window.location.href;
+    
 }
+
+
 
 </script>
 
